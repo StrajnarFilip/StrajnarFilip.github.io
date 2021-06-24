@@ -5,4 +5,4 @@ function main() {
 }
 console.log("Not ready");
 
-document.addEventListener("load", main)
+window.addEventListener("load", main)
