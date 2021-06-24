@@ -1,7 +1,10 @@
 
 function main() {
     console.log("hi");
-    navigator.serviceWorker.register("/sw.js")
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js")
+        console.log("Service Worker allowed");
+    }
 }
 
 window.addEventListener("load", main)
