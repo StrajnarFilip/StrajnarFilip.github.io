@@ -1,3 +1,15 @@
+const cacheName = "Cache1";
+function CacheResourcesOnInstallation(array_of_resources) {
+    // array_of_resources should contain strings of paths you wish to cache ( Example: /index.html )
+    self.addEventListener('install', function (event) {
+        // This event happens when Service worker is being installed
+        event.waitUntil(caches.open(cacheName).then(function (chosen_cache) {
+            // Opens cache (you can have multiple caches with different names)
+            return chosen_cache.addAll(array_of_resources); // Adds all the resources to cache
+        }));
+    });
+}
+
 function ActivateNetworkFirst() {
     // ** Network First (Network Falling Back to Cache) **
     // Calling this function will activate network-first strategy. Whenever user makes a request,
@@ -32,4 +44,6 @@ async function ClearAllCache() {
         caches.delete(cache_name);
     });
 }
+
+CacheResourcesOnInstallation(["index.html","main.js","sw.js"])
 ActivateNetworkFirst();
