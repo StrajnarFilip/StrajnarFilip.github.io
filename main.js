@@ -6,7 +6,7 @@ function main() {
         console.log("Service Worker allowed");
     }
     const reset = document.getElementById("reset_cache")
-    reset.addEventListener("click", () => {
+    reset.addEventListener("click", async() => {
         const all_cache_names = await caches.keys();
         all_cache_names.forEach(cache_name => {
             caches.delete(cache_name);
