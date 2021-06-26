@@ -73,9 +73,8 @@ function main() {
             var x = enc;
             x.value = "Hello";
             console.log("value set to hello");
-            if ((plaintex === null || plaintex === void 0 ? void 0 : plaintex.nodeValue) != null) {
-                AES_encrypt(plaintex.nodeValue, "OOF");
-            }
+            var y = plaintex;
+            AES_encrypt(y.value, "OOF");
         }
     });
 }

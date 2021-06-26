@@ -30,13 +30,12 @@ function main() {
     encrypt_btn?.addEventListener("click", () => {
         console.log("Button clicked!");
         if (enc != null) {
-            let x= enc as HTMLInputElement
-            x.value="Hello"
+            let x = enc as HTMLInputElement
+            x.value = "Hello"
             console.log("value set to hello");
-            
-            if (plaintex?.nodeValue != null) {
-                AES_encrypt(plaintex.nodeValue, "OOF")
-            }
+            let y= plaintex as HTMLInputElement;
+            AES_encrypt(y.value, "OOF")
+
         }
     })
 
