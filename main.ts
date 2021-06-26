@@ -80,6 +80,9 @@ function AES_GenerateKey() {
 }
 function AES_GenerateIV(): string {
     let random_IV = window.crypto.getRandomValues(new Uint8Array(16))
+
+    let ivtxtbox = document.getElementById("IV") as HTMLInputElement
+    ivtxtbox.value = toHexString(random_IV)
     return toHexString(random_IV)
 }
 

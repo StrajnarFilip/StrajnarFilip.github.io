@@ -101,6 +101,8 @@ function AES_GenerateKey() {
 }
 function AES_GenerateIV() {
     var random_IV = window.crypto.getRandomValues(new Uint8Array(16));
+    var ivtxtbox = document.getElementById("IV");
+    ivtxtbox.value = toHexString(random_IV);
     return toHexString(random_IV);
 }
 function main() {
