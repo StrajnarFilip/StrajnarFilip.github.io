@@ -134,15 +134,24 @@ function main() {
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
         console.log("Button clicked!");
+        var utf8text = document.getElementById("plaintext_utf8");
         var plaintext_box = plaintex;
         var key_textbox = document.getElementById("key");
+        if (plaintext_box.value.length > 0) {
+            var x = new TextEncoder();
+            plaintext_box.value = toHexString(x.encode(utf8text.value));
+        }
         AES_encrypt(plaintext_box.value, key_textbox.value);
     });
     keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
     decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
         var key_textbox = document.getElementById("key");
         var cyphertext = document.getElementById("encrypted");
+        var plaintext_box = plaintex;
         AES_decrypt(cyphertext.value, key_textbox.value);
+        var x = new TextDecoder();
+        var utf8text = document.getElementById("plaintext_utf8");
+        utf8text.value = x.decode(toByteArray(plaintext_box.value));
     });
 }
 window.addEventListener("load", main);

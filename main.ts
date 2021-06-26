@@ -38,7 +38,7 @@ function AES_encrypt(hex_plaintext: string, hex_key: string) {
 function AES_decrypt(hex_cyphertext: string, hex_key: string) {
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
     let cyphertext_arr = toByteArray(hex_cyphertext)
-    let cyphertext = cyphertext_arr.slice(0,cyphertext_arr.length - 16)
+    let cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16)
 
     let iv = cyphertext_arr.slice(-16)
     console.log(`IV: ${iv}, Whole: ${cyphertext}`);
@@ -111,9 +111,15 @@ function main() {
 
     encrypt_btn?.addEventListener("click", () => {
         console.log("Button clicked!");
-
+        let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
         let plaintext_box = plaintex as HTMLInputElement;
         let key_textbox = document.getElementById("key") as HTMLInputElement
+
+        if (plaintext_box.value.length > 0) {
+            let x = new TextEncoder()
+            plaintext_box.value = toHexString(x.encode(utf8text.value))
+        }
+
         AES_encrypt(plaintext_box.value, key_textbox.value)
 
     })
@@ -121,7 +127,11 @@ function main() {
     decryptbtn?.addEventListener("click", () => {
         let key_textbox = document.getElementById("key") as HTMLInputElement
         let cyphertext = document.getElementById("encrypted") as HTMLInputElement
+        let plaintext_box = plaintex as HTMLInputElement;
         AES_decrypt(cyphertext.value, key_textbox.value)
+        let x = new TextDecoder()
+        let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
+        utf8text.value = x.decode(toByteArray(plaintext_box.value))
     })
 }
 
