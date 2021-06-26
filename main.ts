@@ -1,10 +1,10 @@
 function AES_encrypt(plaintext: string, password: string) {
     console.log("Encryption called");
     let ob = CryptoJS.AES.encrypt(plaintext, password);
-    console.log(`${ob.algorithm},${ob.blockSize},${ob.ciphertext},${ob.iv},${ob.key},${ob.mode},${ob.padding},${ob.salt}`);
+    console.log(`Object :${ob},\nAlgo: ${ob.algorithm},\nBlocksize: ${ob.blockSize},\nCyphertext: ${ob.ciphertext},\nIV: ${ob.iv},\nKey: ${ob.key},\n Mode: ${ob.mode},\nPadding: ${ob.padding},\nSalt: ${ob.salt}`);
 }
 function AES_decrypt() {
-
+    CryptoJS.AES.decrypt("","")
 }
 
 
