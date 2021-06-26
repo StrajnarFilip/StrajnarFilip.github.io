@@ -28,10 +28,8 @@ function main() {
 
     encrypt_btn?.addEventListener("click", () => {
         if (enc != null) {
-            enc.innerHTML = "iinerhtml"
-            enc.innerText= "innertext"
-            enc.textContent = "cont"
-            enc.nodeValue = "val"
+            let x= enc as HTMLInputElement
+            x.value="Hello"
             
             if (plaintex?.nodeValue != null) {
                 AES_encrypt(plaintex.nodeValue, "OOF")
