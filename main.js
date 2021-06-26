@@ -47,7 +47,22 @@ function toByteArray(hexString) {
     }
     return new Uint8Array(result);
 }
-function AES_encrypt(hex_plaintext, hex_key) {
+function AES_encrypt_callback(hex_enc) {
+    console.log("Encrypted:\n" + hex_enc);
+    var enc = document.getElementById("encrypted");
+    var enc_txtbox = enc;
+    enc_txtbox.value = hex_enc;
+}
+function AES_decrypt_callback(plaintext_hex) {
+    console.log("Decrypted:\n" + plaintext_hex);
+    var plaintxtbox = document.getElementById("plaintext");
+    var txtbox = plaintxtbox;
+    txtbox.value = plaintext_hex;
+    var x = new TextDecoder();
+    var utf8text = document.getElementById("plaintext_utf8");
+    utf8text.value = x.decode(toByteArray(plaintext_hex));
+}
+function AES_encrypt(hex_plaintext, hex_key, callback) {
     var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
     var iv = toByteArray(AES_GenerateIV());
     key_import.then(function (key) {
@@ -58,14 +73,11 @@ function AES_encrypt(hex_plaintext, hex_key) {
         result.then(function (encrypted_array) {
             var u8arr = new Uint8Array(encrypted_array);
             var hex_array_withiv = toHexString(u8arr) + toHexString(iv);
-            console.log("Encrypted:\n" + hex_array_withiv);
-            var enc = document.getElementById("encrypted");
-            var enc_txtbox = enc;
-            enc_txtbox.value = hex_array_withiv;
+            callback(hex_array_withiv);
         });
     });
 }
-function AES_decrypt(hex_cyphertext, hex_key) {
+function AES_decrypt(hex_cyphertext, hex_key, callback) {
     var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
     var cyphertext_arr = toByteArray(hex_cyphertext);
     var cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16);
@@ -80,13 +92,7 @@ function AES_decrypt(hex_cyphertext, hex_key) {
             var u8arr1 = new Uint8Array(decrypted_array);
             console.log(u8arr1);
             var plaintext_hex = toHexString(u8arr1);
-            console.log("Decrypted:\n" + plaintext_hex);
-            var plaintxtbox = document.getElementById("plaintext");
-            var txtbox = plaintxtbox;
-            txtbox.value = plaintext_hex;
-            var x = new TextDecoder();
-            var utf8text = document.getElementById("plaintext_utf8");
-            utf8text.value = x.decode(toByteArray(plaintext_hex));
+            callback(plaintext_hex);
         }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
     }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
 }
@@ -145,13 +151,13 @@ function main() {
             var x = new TextEncoder();
             plaintext_box.value = toHexString(x.encode(utf8text.value));
         }
-        AES_encrypt(plaintext_box.value, key_textbox.value);
+        AES_encrypt(plaintext_box.value, key_textbox.value, AES_encrypt_callback);
     });
     keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
     decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
         var key_textbox = document.getElementById("key");
         var cyphertext = document.getElementById("encrypted");
-        AES_decrypt(cyphertext.value, key_textbox.value);
+        AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback);
     });
 }
 window.addEventListener("load", main);

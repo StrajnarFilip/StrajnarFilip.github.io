@@ -11,7 +11,25 @@ function toByteArray(hexString: string): Uint8Array {
     return new Uint8Array(result);
 }
 
-function AES_encrypt(hex_plaintext: string, hex_key: string) {
+function AES_encrypt_callback(hex_enc: string) {
+    console.log(`Encrypted:\n${hex_enc}`);
+    const enc = document.getElementById("encrypted")
+    const enc_txtbox = enc as HTMLInputElement
+    enc_txtbox.value = hex_enc
+}
+
+function AES_decrypt_callback(plaintext_hex: string) {
+    console.log(`Decrypted:\n${plaintext_hex}`);
+    const plaintxtbox = document.getElementById("plaintext")
+    const txtbox = plaintxtbox as HTMLInputElement
+    txtbox.value = plaintext_hex
+
+    let x = new TextDecoder()
+    let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
+    utf8text.value = x.decode(toByteArray(plaintext_hex))
+}
+
+function AES_encrypt(hex_plaintext: string, hex_key: string, callback: (hex_encrypted: string) => void) {
 
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
     let iv = toByteArray(AES_GenerateIV())
@@ -28,16 +46,13 @@ function AES_encrypt(hex_plaintext: string, hex_key: string) {
         result.then((encrypted_array) => {
             let u8arr = new Uint8Array(encrypted_array)
             let hex_array_withiv = toHexString(u8arr) + toHexString(iv)
-            console.log(`Encrypted:\n${hex_array_withiv}`);
-            const enc = document.getElementById("encrypted")
-            const enc_txtbox = enc as HTMLInputElement
-            enc_txtbox.value = hex_array_withiv
+            callback(hex_array_withiv)
         })
     })
 
 }
 
-function AES_decrypt(hex_cyphertext: string, hex_key: string) {
+function AES_decrypt(hex_cyphertext: string, hex_key: string, callback: (hex_encrypted: string) => void) {
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
     let cyphertext_arr = toByteArray(hex_cyphertext)
     let cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16)
@@ -54,14 +69,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
             let u8arr1 = new Uint8Array(decrypted_array)
             console.log(u8arr1);
             let plaintext_hex = toHexString(u8arr1)
-            console.log(`Decrypted:\n${plaintext_hex}`);
-            const plaintxtbox = document.getElementById("plaintext")
-            const txtbox = plaintxtbox as HTMLInputElement
-            txtbox.value = plaintext_hex
-
-            let x = new TextDecoder()
-            let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
-            utf8text.value = x.decode(toByteArray(plaintext_hex))
+            callback(plaintext_hex)
         }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
     }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
 
@@ -128,14 +136,14 @@ function main() {
             plaintext_box.value = toHexString(x.encode(utf8text.value))
         }
 
-        AES_encrypt(plaintext_box.value, key_textbox.value)
+        AES_encrypt(plaintext_box.value, key_textbox.value, AES_encrypt_callback)
 
     })
     keygen_btn?.addEventListener("click", () => { AES_GenerateKey() })
     decryptbtn?.addEventListener("click", () => {
         let key_textbox = document.getElementById("key") as HTMLInputElement
         let cyphertext = document.getElementById("encrypted") as HTMLInputElement
-        AES_decrypt(cyphertext.value, key_textbox.value)
+        AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback)
     })
 }
 
