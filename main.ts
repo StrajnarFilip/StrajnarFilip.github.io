@@ -45,7 +45,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
     let iv = cyphertext_arr.slice(-16)
     console.log(`IV: ${iv}, Whole: ${cyphertext_arr}, just ct: ${cyphertext}, HEX CT: ${hex_cyphertext}, HEX KEY: ${hex_key} `);
     key_import.then((key) => {
-        let result = window.crypto.subtle.decrypt({
+        let result = crypto.subtle.decrypt({
             name: "AES-CBC",
             iv
         }, key, cyphertext)
