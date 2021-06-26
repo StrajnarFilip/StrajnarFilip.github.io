@@ -65,7 +65,25 @@ function AES_encrypt(hex_plaintext, hex_key) {
         });
     });
 }
-function AES_decrypt(hex_cyphertext, hey_key) {
+function AES_decrypt(hex_cyphertext, hex_key) {
+    var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
+    var cyphertext_arr = toByteArray(hex_cyphertext);
+    var cyphertext = cyphertext_arr.slice(cyphertext_arr.length - 16);
+    var iv = toByteArray(hex_cyphertext).slice(-16);
+    key_import.then(function (key) {
+        var result = window.crypto.subtle.decrypt({
+            name: "AES-CBC",
+            iv: iv
+        }, key, cyphertext);
+        result.then(function (decrypted_array) {
+            var u8arr = new Uint8Array(decrypted_array);
+            var plaintext_hex = toHexString(u8arr);
+            console.log("Decrypted:\n" + plaintext_hex);
+            var plaintxtbox = document.getElementById("plaintext");
+            var txtbox = plaintxtbox;
+            txtbox.value = plaintext_hex;
+        });
+    });
 }
 function AES_GenerateKey() {
     window.crypto.subtle.generateKey({
