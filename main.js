@@ -35,19 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function utf8_to_b64(str) {
-    return window.btoa(unescape(encodeURIComponent(str)));
+function toHexString(byteArray) {
+    return Array.prototype.map.call(byteArray, function (byte) {
+        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+    }).join('');
 }
-function b64_to_utf8(str) {
-    return decodeURIComponent(escape(window.atob(str)));
-}
-function BytesToBase64(bytes) {
-    var utf8decoder = new TextDecoder();
-    return utf8_to_b64(utf8decoder.decode(bytes)); // btoa is UTF8 -> base64
-}
-function Base64ToBytes(base64) {
-    var utf8encoder = new TextEncoder();
-    return utf8encoder.encode(b64_to_utf8(base64)); // atob is base64 -> UTF8
+function toByteArray(hexString) {
+    var result = [];
+    for (var i = 0; i < hexString.length; i += 2) {
+        result.push(parseInt(hexString.substr(i, 2), 16));
+    }
+    return result;
 }
 function AES_encrypt(plaintext, password) {
 }
@@ -61,15 +59,15 @@ function AES_GenerateKey() {
         crypto.subtle.exportKey("raw", key).then(function (result) {
             var exportedKeyBuffer = new Uint8Array(result);
             console.log(exportedKeyBuffer);
-            console.log(BytesToBase64(exportedKeyBuffer));
+            console.log(toHexString(exportedKeyBuffer));
             var key_textbox = document.getElementById("key");
-            key_textbox.value = BytesToBase64(exportedKeyBuffer);
+            key_textbox.value = toHexString(exportedKeyBuffer);
         });
     });
 }
 function AES_GenerateIV() {
     var random_IV = window.crypto.getRandomValues(new Uint8Array(16));
-    return BytesToBase64(random_IV);
+    return toHexString(random_IV);
 }
 function main() {
     var _this = this;

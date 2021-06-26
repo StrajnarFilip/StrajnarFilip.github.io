@@ -1,19 +1,14 @@
-function utf8_to_b64(str: string) {
-    return window.btoa(unescape(encodeURIComponent(str)));
+function toHexString(byteArray: Uint8Array) {
+    return Array.prototype.map.call(byteArray, function (byte) {
+        return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+    }).join('');
 }
-
-function b64_to_utf8(str: string) {
-    return decodeURIComponent(escape(window.atob(str)));
-}
-
-function BytesToBase64(bytes: Uint8Array): string {
-    let utf8decoder = new TextDecoder()
-    return utf8_to_b64(utf8decoder.decode(bytes)) // btoa is UTF8 -> base64
-}
-
-function Base64ToBytes(base64: string): Uint8Array {
-    let utf8encoder = new TextEncoder()
-    return utf8encoder.encode(b64_to_utf8(base64)) // atob is base64 -> UTF8
+function toByteArray(hexString: string) {
+    var result = [];
+    for (var i = 0; i < hexString.length; i += 2) {
+        result.push(parseInt(hexString.substr(i, 2), 16));
+    }
+    return result;
 }
 
 function AES_encrypt(plaintext: string, password: string) {
@@ -35,9 +30,9 @@ function AES_GenerateKey() {
         crypto.subtle.exportKey("raw", key).then((result) => {
             const exportedKeyBuffer = new Uint8Array(result);
             console.log(exportedKeyBuffer);
-            console.log(BytesToBase64(exportedKeyBuffer))
+            console.log(toHexString(exportedKeyBuffer))
             let key_textbox = document.getElementById("key") as HTMLInputElement
-            key_textbox.value = BytesToBase64(exportedKeyBuffer)
+            key_textbox.value = toHexString(exportedKeyBuffer)
         })
 
     })
@@ -45,7 +40,7 @@ function AES_GenerateKey() {
 }
 function AES_GenerateIV(): string {
     let random_IV = window.crypto.getRandomValues(new Uint8Array(16))
-    return BytesToBase64(random_IV)
+    return toHexString(random_IV)
 }
 
 
