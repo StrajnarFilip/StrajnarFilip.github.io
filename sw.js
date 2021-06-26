@@ -38,6 +38,34 @@ function ActivateNetworkFirst() {
         })());
     });
 }
+
+function ActivateCacheFirst() {
+    // ** Cache First (Cache Falling Back to Network) **
+    // Calling this function will activate cache-first strategy of caching assets.
+    // This means that when user makes a request, service worker will first check
+    // cache (storage on disk), if asset is located there it'll return it without
+    // making an HTTP(s) request. If asset isn't found in cache, it forwards the
+    // request like it would normally do.
+    self.addEventListener('fetch', (fetch_event) => {
+        // On fetch (asset request from browser)
+        fetch_event.respondWith((async () => {
+            const cache_response = await caches.match(fetch_event.request);
+            if (cache_response)
+                return cache_response;
+            // if cache responded with not null (meaning it has the asset), return the asset
+            const response = await fetch(fetch_event.request);
+            // if cache didn't find the resource, the return hasn't happened yet, so it continues
+            // by making a fetch (web) request
+            const cache = await caches.open(cacheName);
+            // opens the cache, getting ready to store the new asset
+            cache.put(fetch_event.request, response.clone());
+            // Actually stores the asset in the cache
+            return response;
+            // And returns to the browser.
+        })());
+    });
+}
+
 async function ClearAllCache() {
     const all_cache_names = await caches.keys();
     all_cache_names.forEach(cache_name => {
@@ -45,5 +73,5 @@ async function ClearAllCache() {
     });
 }
 
-CacheResourcesOnInstallation(["index.html","main.js","sw.js"])
-ActivateNetworkFirst();
+CacheResourcesOnInstallation(["index.html", "main.js", "sw.js"])
+ActivateCacheFirst();
