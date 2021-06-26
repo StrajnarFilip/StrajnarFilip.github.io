@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 function AES_encrypt(plaintext, password) {
+    console.log("Encryption called");
     var ob = CryptoJS.AES.encrypt(plaintext, password);
     console.log(ob.algorithm + "," + ob.blockSize + "," + ob.ciphertext + "," + ob.iv + "," + ob.key + "," + ob.mode + "," + ob.padding + "," + ob.salt);
 }
@@ -67,9 +68,11 @@ function main() {
         });
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
+        console.log("Button clicked!");
         if (enc != null) {
             var x = enc;
             x.value = "Hello";
+            console.log("value set to hello");
             if ((plaintex === null || plaintex === void 0 ? void 0 : plaintex.nodeValue) != null) {
                 AES_encrypt(plaintex.nodeValue, "OOF");
             }

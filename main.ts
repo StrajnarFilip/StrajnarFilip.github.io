@@ -1,4 +1,5 @@
 function AES_encrypt(plaintext: string, password: string) {
+    console.log("Encryption called");
     let ob = CryptoJS.AES.encrypt(plaintext, password);
     console.log(`${ob.algorithm},${ob.blockSize},${ob.ciphertext},${ob.iv},${ob.key},${ob.mode},${ob.padding},${ob.salt}`);
 }
@@ -27,9 +28,11 @@ function main() {
 
 
     encrypt_btn?.addEventListener("click", () => {
+        console.log("Button clicked!");
         if (enc != null) {
             let x= enc as HTMLInputElement
             x.value="Hello"
+            console.log("value set to hello");
             
             if (plaintex?.nodeValue != null) {
                 AES_encrypt(plaintex.nodeValue, "OOF")
