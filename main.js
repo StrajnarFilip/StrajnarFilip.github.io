@@ -35,13 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+function utf8_to_b64(str) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+function b64_to_utf8(str) {
+    return decodeURIComponent(escape(window.atob(str)));
+}
 function BytesToBase64(bytes) {
-    var utf8decoder = new TextDecoder("latin1");
-    return btoa(utf8decoder.decode(bytes)); // btoa is UTF8 -> base64
+    var utf8decoder = new TextDecoder();
+    return utf8_to_b64(utf8decoder.decode(bytes)); // btoa is UTF8 -> base64
 }
 function Base64ToBytes(base64) {
     var utf8encoder = new TextEncoder();
-    return utf8encoder.encode(atob(base64)); // atob is base64 -> UTF8
+    return utf8encoder.encode(b64_to_utf8(base64)); // atob is base64 -> UTF8
 }
 function AES_encrypt(plaintext, password) {
 }
