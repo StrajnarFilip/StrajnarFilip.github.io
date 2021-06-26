@@ -1,5 +1,3 @@
-import { enc } from "crypto-js";
-
 function toHexString(byteArray: Uint8Array): string {
     return Array.prototype.map.call(byteArray, function (byte) {
         return ('0' + (byte & 0xFF).toString(16)).slice(-2);
@@ -37,7 +35,7 @@ function AES_encrypt(hex_plaintext: string, hex_key: string) {
     })
 
 }
-function AES_decrypt(hex_cyphertext: string, hey_key: string): string {
+function AES_decrypt(hex_cyphertext: string, hey_key: string) {
 
 }
 
@@ -89,12 +87,11 @@ function main() {
 
     encrypt_btn?.addEventListener("click", () => {
         console.log("Button clicked!");
-        if (enc != null) {
-            let plaintext_box = plaintex as HTMLInputElement;
-            let key_textbox = document.getElementById("key") as HTMLInputElement
-            AES_encrypt(plaintext_box.value, key_textbox.value)
 
-        }
+        let plaintext_box = plaintex as HTMLInputElement;
+        let key_textbox = document.getElementById("key") as HTMLInputElement
+        AES_encrypt(plaintext_box.value, key_textbox.value)
+
     })
     keygen_btn?.addEventListener("click", () => { AES_GenerateKey() })
 }

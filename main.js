@@ -35,8 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var crypto_js_1 = require("crypto-js");
 function toHexString(byteArray) {
     return Array.prototype.map.call(byteArray, function (byte) {
         return ('0' + (byte & 0xFF).toString(16)).slice(-2);
@@ -114,11 +112,9 @@ function main() {
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
         console.log("Button clicked!");
-        if (crypto_js_1.enc != null) {
-            var plaintext_box = plaintex;
-            var key_textbox = document.getElementById("key");
-            AES_encrypt(plaintext_box.value, key_textbox.value);
-        }
+        var plaintext_box = plaintex;
+        var key_textbox = document.getElementById("key");
+        AES_encrypt(plaintext_box.value, key_textbox.value);
     });
     keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
 }
