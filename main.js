@@ -82,7 +82,7 @@ function AES_decrypt(hex_cyphertext, hex_key) {
             var plaintxtbox = document.getElementById("plaintext");
             var txtbox = plaintxtbox;
             txtbox.value = plaintext_hex;
-        }).catch(function (error) { console.log(error); });
+        }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
     });
 }
 function AES_GenerateKey() {

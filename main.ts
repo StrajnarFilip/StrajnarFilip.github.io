@@ -53,7 +53,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
             const plaintxtbox = document.getElementById("plaintext")
             const txtbox = plaintxtbox as HTMLInputElement
             txtbox.value = plaintext_hex
-        }).catch((error) => { console.log(error); })
+        }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
     })
 
 }
