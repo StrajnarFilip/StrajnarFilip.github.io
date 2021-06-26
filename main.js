@@ -88,7 +88,7 @@ function AES_decrypt(hex_cyphertext, hex_key) {
             var utf8text = document.getElementById("plaintext_utf8");
             utf8text.value = x.decode(toByteArray(plaintext_hex));
         }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
-    });
+    }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
 }
 function AES_GenerateKey() {
     window.crypto.subtle.generateKey({

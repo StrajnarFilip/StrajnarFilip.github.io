@@ -36,6 +36,7 @@ function AES_encrypt(hex_plaintext: string, hex_key: string) {
     })
 
 }
+
 function AES_decrypt(hex_cyphertext: string, hex_key: string) {
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
     let cyphertext_arr = toByteArray(hex_cyphertext)
@@ -48,6 +49,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
             name: "AES-CBC",
             iv
         }, key, cyphertext)
+
         result.then((decrypted_array) => {
             let u8arr = new Uint8Array(decrypted_array)
             console.log(u8arr);
@@ -61,7 +63,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
             let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
             utf8text.value = x.decode(toByteArray(plaintext_hex))
         }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
-    })
+    }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
 
 }
 
