@@ -68,7 +68,7 @@ function AES_encrypt(hex_plaintext, hex_key) {
 function AES_decrypt(hex_cyphertext, hex_key) {
     var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
     var cyphertext_arr = toByteArray(hex_cyphertext);
-    var cyphertext = cyphertext_arr.slice(cyphertext_arr.length - 16);
+    var cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16);
     var iv = cyphertext_arr.slice(-16);
     console.log("IV: " + iv + ", Whole: " + cyphertext);
     key_import.then(function (key) {
