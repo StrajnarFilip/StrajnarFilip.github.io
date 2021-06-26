@@ -51,9 +51,9 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
         }, key, cyphertext)
 
         result.then((decrypted_array) => {
-            let u8arr = new Uint8Array(decrypted_array)
-            console.log(u8arr);
-            let plaintext_hex = toHexString(u8arr)
+            let u8arr1 = new Uint8Array(decrypted_array)
+            console.log(u8arr1);
+            let plaintext_hex = toHexString(u8arr1)
             console.log(`Decrypted:\n${plaintext_hex}`);
             const plaintxtbox = document.getElementById("plaintext")
             const txtbox = plaintxtbox as HTMLInputElement
