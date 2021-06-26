@@ -54,6 +54,10 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
             const plaintxtbox = document.getElementById("plaintext")
             const txtbox = plaintxtbox as HTMLInputElement
             txtbox.value = plaintext_hex
+
+            let x = new TextDecoder()
+            let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
+            utf8text.value = x.decode(toByteArray(plaintext_hex))
         }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
     })
 
@@ -127,11 +131,7 @@ function main() {
     decryptbtn?.addEventListener("click", () => {
         let key_textbox = document.getElementById("key") as HTMLInputElement
         let cyphertext = document.getElementById("encrypted") as HTMLInputElement
-        let plaintext_box = plaintex as HTMLInputElement;
         AES_decrypt(cyphertext.value, key_textbox.value)
-        let x = new TextDecoder()
-        let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
-        utf8text.value = x.decode(toByteArray(plaintext_box.value))
     })
 }
 

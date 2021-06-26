@@ -83,6 +83,9 @@ function AES_decrypt(hex_cyphertext, hex_key) {
             var plaintxtbox = document.getElementById("plaintext");
             var txtbox = plaintxtbox;
             txtbox.value = plaintext_hex;
+            var x = new TextDecoder();
+            var utf8text = document.getElementById("plaintext_utf8");
+            utf8text.value = x.decode(toByteArray(plaintext_hex));
         }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
     });
 }
@@ -147,11 +150,7 @@ function main() {
     decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
         var key_textbox = document.getElementById("key");
         var cyphertext = document.getElementById("encrypted");
-        var plaintext_box = plaintex;
         AES_decrypt(cyphertext.value, key_textbox.value);
-        var x = new TextDecoder();
-        var utf8text = document.getElementById("plaintext_utf8");
-        utf8text.value = x.decode(toByteArray(plaintext_box.value));
     });
 }
 window.addEventListener("load", main);
