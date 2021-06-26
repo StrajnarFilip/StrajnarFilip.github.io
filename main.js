@@ -35,6 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+var crypto_js_1 = require("crypto-js");
 function toHexString(byteArray) {
     return Array.prototype.map.call(byteArray, function (byte) {
         return ('0' + (byte & 0xFF).toString(16)).slice(-2);
@@ -45,11 +47,27 @@ function toByteArray(hexString) {
     for (var i = 0; i < hexString.length; i += 2) {
         result.push(parseInt(hexString.substr(i, 2), 16));
     }
-    return result;
+    return new Uint8Array(result);
 }
-function AES_encrypt(plaintext, password) {
+function AES_encrypt(hex_plaintext, hex_key) {
+    var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
+    var iv = toByteArray(AES_GenerateIV());
+    key_import.then(function (key) {
+        var result = window.crypto.subtle.encrypt({
+            name: "AES-CBC",
+            iv: iv
+        }, key, toByteArray(hex_plaintext));
+        result.then(function (encrypted_array) {
+            var u8arr = new Uint8Array(encrypted_array);
+            var hex_array_withiv = toHexString(u8arr) + toHexString(iv);
+            console.log("Encrypted:\n" + hex_array_withiv);
+            var enc = document.getElementById("encrypted");
+            var enc_txtbox = enc;
+            enc_txtbox.value = hex_array_withiv;
+        });
+    });
 }
-function AES_decrypt() {
+function AES_decrypt(hex_cyphertext, hey_key) {
 }
 function AES_GenerateKey() {
     window.crypto.subtle.generateKey({
@@ -71,7 +89,6 @@ function AES_GenerateIV() {
 }
 function main() {
     var _this = this;
-    var enc = document.getElementById("encrypted");
     var plaintex = document.getElementById("plaintext");
     var encrypt_btn = document.getElementById("encrypt_btn");
     var keygen_btn = document.getElementById("keygen_btn");
@@ -97,12 +114,10 @@ function main() {
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
         console.log("Button clicked!");
-        if (enc != null) {
-            var x = enc;
-            x.value = "Hello";
-            console.log("value set to hello");
-            var y = plaintex;
-            AES_encrypt(y.value, "OOF");
+        if (crypto_js_1.enc != null) {
+            var plaintext_box = plaintex;
+            var key_textbox = document.getElementById("key");
+            AES_encrypt(plaintext_box.value, key_textbox.value);
         }
     });
     keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
