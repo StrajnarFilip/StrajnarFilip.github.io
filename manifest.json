@@ -1,0 +1,15 @@
+{
+    "name": "Filip's AES E2EE",
+    "short_name": "E2EE",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#4CFF4C",
+    "description": "End to end encryption PWA. Fully working offline",
+    "icons": [
+        {
+            "src": "lock.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
