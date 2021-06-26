@@ -35,19 +35,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+function BytesToBase64(bytes) {
+    var utf8decoder = new TextDecoder();
+    return btoa(utf8decoder.decode(bytes)); // btoa is UTF8 -> base64
+}
+function Base64ToBytes(base64) {
+    var utf8encoder = new TextEncoder();
+    return utf8encoder.encode(atob(base64)); // atob is base64 -> UTF8
+}
 function AES_encrypt(plaintext, password) {
-    console.log("Encryption called");
-    var ob = CryptoJS.AES.encrypt(plaintext, password);
-    console.log("Object :" + ob + ",\nAlgo: " + ob.algorithm + ",\nBlocksize: " + ob.blockSize + ",\nCyphertext: " + ob.ciphertext + ",\nIV: " + ob.iv + ",\nKey: " + ob.key + ",\n Mode: " + ob.mode + ",\nPadding: " + ob.padding + ",\nSalt: " + ob.salt);
 }
 function AES_decrypt() {
-    CryptoJS.AES.decrypt("", "");
+}
+function AES_GenerateKey() {
+    window.crypto.subtle.generateKey({
+        name: "AES-CBC",
+        length: 256
+    }, true, ["encrypt", "decrypt"]).then(function (key) {
+        crypto.subtle.exportKey("raw", key).then(function (result) {
+            var exportedKeyBuffer = new Uint8Array(result);
+            console.log(exportedKeyBuffer);
+            console.log(BytesToBase64(exportedKeyBuffer));
+            var key_textbox = document.getElementById("key");
+            key_textbox.value = BytesToBase64(exportedKeyBuffer);
+        });
+    });
+}
+function AES_GenerateIV() {
+    var random_IV = window.crypto.getRandomValues(new Uint8Array(16));
+    return BytesToBase64(random_IV);
 }
 function main() {
     var _this = this;
     var enc = document.getElementById("encrypted");
     var plaintex = document.getElementById("plaintext");
     var encrypt_btn = document.getElementById("encrypt_btn");
+    var keygen_btn = document.getElementById("keygen_btn");
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
@@ -78,5 +101,6 @@ function main() {
             AES_encrypt(y.value, "OOF");
         }
     });
+    keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
 }
 window.addEventListener("load", main);
