@@ -70,7 +70,7 @@ function AES_decrypt(hex_cyphertext, hex_key) {
     var cyphertext_arr = toByteArray(hex_cyphertext);
     var cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16);
     var iv = cyphertext_arr.slice(-16);
-    console.log("IV: " + iv + ", Whole: " + cyphertext_arr + ", just ct: " + cyphertext);
+    console.log("IV: " + iv + ", Whole: " + cyphertext_arr + ", just ct: " + cyphertext + ", HEX CT: " + hex_cyphertext + ", HEX KEY: " + hex_key + " ");
     key_import.then(function (key) {
         var result = window.crypto.subtle.decrypt({
             name: "AES-CBC",

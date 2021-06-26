@@ -12,6 +12,7 @@ function toByteArray(hexString: string): Uint8Array {
 }
 
 function AES_encrypt(hex_plaintext: string, hex_key: string) {
+
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
     let iv = toByteArray(AES_GenerateIV())
     key_import.then((key) => {
@@ -41,7 +42,7 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string) {
     let cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16)
 
     let iv = cyphertext_arr.slice(-16)
-    console.log(`IV: ${iv}, Whole: ${cyphertext_arr}, just ct: ${cyphertext}`);
+    console.log(`IV: ${iv}, Whole: ${cyphertext_arr}, just ct: ${cyphertext}, HEX CT: ${hex_cyphertext}, HEX KEY: ${hex_key} `);
     key_import.then((key) => {
         let result = window.crypto.subtle.decrypt({
             name: "AES-CBC",
