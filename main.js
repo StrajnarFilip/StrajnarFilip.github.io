@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 function BytesToBase64(bytes) {
-    var utf8decoder = new TextDecoder();
+    var utf8decoder = new TextDecoder('windows-1252');
     return btoa(utf8decoder.decode(bytes)); // btoa is UTF8 -> base64
 }
 function Base64ToBytes(base64) {

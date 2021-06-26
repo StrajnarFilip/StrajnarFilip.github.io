@@ -1,5 +1,5 @@
 function BytesToBase64(bytes: Uint8Array): string {
-    let utf8decoder = new TextDecoder()
+    let utf8decoder = new TextDecoder('windows-1252')
     return btoa(utf8decoder.decode(bytes)) // btoa is UTF8 -> base64
 }
 
