@@ -92,6 +92,7 @@ function main() {
     const plaintex = document.getElementById("plaintext");
     const encrypt_btn = document.getElementById("encrypt_btn")
     const keygen_btn = document.getElementById("keygen_btn")
+    const decryptbtn = document.getElementById("decrypt_btn")
 
     console.log("hi");
     if ("serviceWorker" in navigator) {
@@ -116,6 +117,11 @@ function main() {
 
     })
     keygen_btn?.addEventListener("click", () => { AES_GenerateKey() })
+    decryptbtn?.addEventListener("click", () => {
+        let key_textbox = document.getElementById("key") as HTMLInputElement
+        let cyphertext = document.getElementById("encrypted") as HTMLInputElement
+        AES_decrypt(cyphertext.value, key_textbox.value)
+    })
 }
 
 window.addEventListener("load", main)

@@ -110,6 +110,7 @@ function main() {
     var plaintex = document.getElementById("plaintext");
     var encrypt_btn = document.getElementById("encrypt_btn");
     var keygen_btn = document.getElementById("keygen_btn");
+    var decryptbtn = document.getElementById("decrypt_btn");
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
@@ -137,5 +138,10 @@ function main() {
         AES_encrypt(plaintext_box.value, key_textbox.value);
     });
     keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
+    decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
+        var key_textbox = document.getElementById("key");
+        var cyphertext = document.getElementById("encrypted");
+        AES_decrypt(cyphertext.value, key_textbox.value);
+    });
 }
 window.addEventListener("load", main);
