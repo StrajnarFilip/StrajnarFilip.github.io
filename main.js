@@ -43,6 +43,8 @@ function AES_decrypt() {
 }
 function main() {
     var _this = this;
+    var enc = document.getElementById("encrypted");
+    var plaintex = document.getElementById("plaintext");
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
@@ -65,9 +67,11 @@ function main() {
     }); });
     var encrypt_btn = document.getElementById("encrypt_btn");
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
-        var enc = document.getElementById("encrypted");
         if (enc != null) {
             enc.nodeValue = "OK";
+            if ((plaintex === null || plaintex === void 0 ? void 0 : plaintex.nodeValue) != null) {
+                AES_encrypt(plaintex.nodeValue, "OOF");
+            }
         }
     });
 }
