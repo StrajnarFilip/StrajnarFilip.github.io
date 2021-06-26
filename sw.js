@@ -73,5 +73,5 @@ async function ClearAllCache() {
     });
 }
 
-CacheResourcesOnInstallation(["index.html", "main.js", "sw.js"])
+CacheResourcesOnInstallation(["index.html", "main.js", "sw.js","bootstrap.css","bootstrap.js"])
 ActivateCacheFirst();
