@@ -132,7 +132,14 @@ function main() {
         var all_cache_names;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, caches.keys()];
+                case 0:
+                    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                        for (var index = 0; index < registrations.length; index++) {
+                            var reg = registrations[index];
+                            reg.unregister;
+                        }
+                    });
+                    return [4 /*yield*/, caches.keys()];
                 case 1:
                     all_cache_names = _a.sent();
                     all_cache_names.forEach(function (cache_name) {

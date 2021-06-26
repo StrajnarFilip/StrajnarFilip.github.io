@@ -118,6 +118,14 @@ function main() {
     }
     const reset = document.getElementById("reset_cache")
     reset?.addEventListener("click", async () => {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+
+            for (let index = 0; index < registrations.length; index++) {
+                const reg = registrations[index];
+                reg.unregister
+            }
+        })
+
         const all_cache_names = await caches.keys();
         all_cache_names.forEach(cache_name => {
             caches.delete(cache_name);
