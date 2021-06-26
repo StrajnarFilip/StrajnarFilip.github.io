@@ -63,5 +63,12 @@ function main() {
             }
         });
     }); });
+    var encrypt_btn = document.getElementById("encrypt_btn");
+    encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
+        var enc = document.getElementById("encrypted");
+        if (enc != null) {
+            enc.nodeValue = "OK";
+        }
+    });
 }
 window.addEventListener("load", main);
