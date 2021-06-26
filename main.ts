@@ -9,7 +9,9 @@ function AES_decrypt() {
 
 function main() {
     const enc = document.getElementById("encrypted")
-    const plaintex=document.getElementById("plaintext");
+    const plaintex = document.getElementById("plaintext");
+    const encrypt_btn = document.getElementById("encrypt_btn")
+    
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js")
@@ -23,12 +25,12 @@ function main() {
         });
     })
 
-    const encrypt_btn = document.getElementById("encrypt_btn")
+
     encrypt_btn?.addEventListener("click", () => {
-        if(enc!=null){
-            enc.nodeValue="OK"
-            if(plaintex?.nodeValue!=null){
-                AES_encrypt(plaintex.nodeValue,"OOF")
+        if (enc != null) {
+            enc.nodeValue = "OK"
+            if (plaintex?.nodeValue != null) {
+                AES_encrypt(plaintex.nodeValue, "OOF")
             }
         }
     })

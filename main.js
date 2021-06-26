@@ -45,6 +45,7 @@ function main() {
     var _this = this;
     var enc = document.getElementById("encrypted");
     var plaintex = document.getElementById("plaintext");
+    var encrypt_btn = document.getElementById("encrypt_btn");
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js");
@@ -65,7 +66,6 @@ function main() {
             }
         });
     }); });
-    var encrypt_btn = document.getElementById("encrypt_btn");
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
         if (enc != null) {
             enc.nodeValue = "OK";
