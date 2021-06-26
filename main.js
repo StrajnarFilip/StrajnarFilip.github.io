@@ -141,7 +141,7 @@ function main() {
         var utf8text = document.getElementById("plaintext_utf8");
         var plaintext_box = plaintex;
         var key_textbox = document.getElementById("key");
-        if (plaintext_box.value.length > 0) {
+        if (utf8text.value.length > 0) {
             var x = new TextEncoder();
             plaintext_box.value = toHexString(x.encode(utf8text.value));
         }

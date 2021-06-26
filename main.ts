@@ -123,7 +123,7 @@ function main() {
         let plaintext_box = plaintex as HTMLInputElement;
         let key_textbox = document.getElementById("key") as HTMLInputElement
 
-        if (plaintext_box.value.length > 0) {
+        if (utf8text.value.length > 0) {
             let x = new TextEncoder()
             plaintext_box.value = toHexString(x.encode(utf8text.value))
         }
