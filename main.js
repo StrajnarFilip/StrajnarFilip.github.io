@@ -68,7 +68,10 @@ function main() {
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
         if (enc != null) {
-            enc.nodeValue = "OK";
+            enc.innerHTML = "iinerhtml";
+            enc.innerText = "innertext";
+            enc.textContent = "cont";
+            enc.nodeValue = "val";
             if ((plaintex === null || plaintex === void 0 ? void 0 : plaintex.nodeValue) != null) {
                 AES_encrypt(plaintex.nodeValue, "OOF");
             }

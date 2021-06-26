@@ -11,7 +11,7 @@ function main() {
     const enc = document.getElementById("encrypted")
     const plaintex = document.getElementById("plaintext");
     const encrypt_btn = document.getElementById("encrypt_btn")
-    
+
     console.log("hi");
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/sw.js")
@@ -28,7 +28,11 @@ function main() {
 
     encrypt_btn?.addEventListener("click", () => {
         if (enc != null) {
-            enc.nodeValue = "OK"
+            enc.innerHTML = "iinerhtml"
+            enc.innerText= "innertext"
+            enc.textContent = "cont"
+            enc.nodeValue = "val"
+            
             if (plaintex?.nodeValue != null) {
                 AES_encrypt(plaintex.nodeValue, "OOF")
             }
