@@ -78,6 +78,7 @@ function AES_decrypt(hex_cyphertext, hex_key) {
         }, key, cyphertext);
         result.then(function (decrypted_array) {
             var u8arr = new Uint8Array(decrypted_array);
+            console.log(u8arr);
             var plaintext_hex = toHexString(u8arr);
             console.log("Decrypted:\n" + plaintext_hex);
             var plaintxtbox = document.getElementById("plaintext");
