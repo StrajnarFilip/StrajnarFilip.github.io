@@ -143,10 +143,13 @@ function main() {
         });
     }); });
     encrypt_btn === null || encrypt_btn === void 0 ? void 0 : encrypt_btn.addEventListener("click", function () {
-        console.log("Button clicked!");
         var utf8text = document.getElementById("plaintext_utf8");
         var plaintext_box = plaintex;
         var key_textbox = document.getElementById("key");
+        if (key_textbox.value.length != 64) {
+            alert("Invalid key!");
+            return;
+        }
         if (utf8text.value.length > 0) {
             var x = new TextEncoder();
             plaintext_box.value = toHexString(x.encode(utf8text.value));
@@ -157,6 +160,14 @@ function main() {
     decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
         var key_textbox = document.getElementById("key");
         var cyphertext = document.getElementById("encrypted");
+        if (key_textbox.value.length != 64) {
+            alert("Invalid key!");
+            return;
+        }
+        if (cyphertext.value.length < 64) {
+            alert("Invalid cyphertext!");
+            return;
+        }
         AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback);
     });
 }

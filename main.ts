@@ -126,10 +126,15 @@ function main() {
 
 
     encrypt_btn?.addEventListener("click", () => {
-        console.log("Button clicked!");
+
         let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
         let plaintext_box = plaintex as HTMLInputElement;
         let key_textbox = document.getElementById("key") as HTMLInputElement
+
+        if (key_textbox.value.length != 64) {
+            alert("Invalid key!")
+            return
+        }
 
         if (utf8text.value.length > 0) {
             let x = new TextEncoder()
@@ -141,8 +146,19 @@ function main() {
     })
     keygen_btn?.addEventListener("click", () => { AES_GenerateKey() })
     decryptbtn?.addEventListener("click", () => {
+
         let key_textbox = document.getElementById("key") as HTMLInputElement
         let cyphertext = document.getElementById("encrypted") as HTMLInputElement
+
+        if (key_textbox.value.length != 64) {
+            alert("Invalid key!")
+            return
+        }
+        if (cyphertext.value.length < 64) {
+            alert("Invalid cyphertext!")
+            return
+        }
+
         AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback)
     })
 }
