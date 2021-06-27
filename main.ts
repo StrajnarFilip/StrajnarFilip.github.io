@@ -191,10 +191,10 @@ function main() {
     })
 
 
-    const key_copy_button = document.getElementById("copy_plaintext")
-    const key_paste_button = document.getElementById("copy_plaintext")
-    const cyphertext_copy_button = document.getElementById("copy_plaintext")
-    const cyphertext_paste_button = document.getElementById("copy_plaintext")
+    const key_copy_button = document.getElementById("copy_key")
+    const key_paste_button = document.getElementById("paste_key")
+    const cyphertext_copy_button = document.getElementById("copy_cyphertext")
+    const cyphertext_paste_button = document.getElementById("paste_cyphertext")
 
     const txt_key = document.getElementById("key") as HTMLInputElement
     const txt_cypher = document.getElementById("encrypted") as HTMLInputElement
