@@ -110,6 +110,8 @@ function AES_GenerateKey() {
         });
     });
 }
+function RSA_GenerateKey() {
+}
 function AES_GenerateIV() {
     var random_IV = window.crypto.getRandomValues(new Uint8Array(16));
     var ivtxtbox = document.getElementById("IV");
