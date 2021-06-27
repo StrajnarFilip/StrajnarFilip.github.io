@@ -179,5 +179,7 @@ function main() {
         }
         AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback);
     });
+    var plaintext_copy_button = document.getElementById("copy_plaintext");
+    var plaintext_paste_button = document.getElementById("paste_plaintext");
 }
 window.addEventListener("load", main);
