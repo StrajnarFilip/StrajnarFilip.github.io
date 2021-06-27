@@ -184,6 +184,11 @@ function main() {
             utf8text.value = clipboard_text
         })
     })
+
+    plaintext_copy_button?.addEventListener("click", () => {
+        let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
+        navigator.clipboard.writeText(utf8text.value)
+    })
 }
 
 window.addEventListener("load", main)

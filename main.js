@@ -187,5 +187,9 @@ function main() {
             utf8text.value = clipboard_text;
         });
     });
+    plaintext_copy_button === null || plaintext_copy_button === void 0 ? void 0 : plaintext_copy_button.addEventListener("click", function () {
+        var utf8text = document.getElementById("plaintext_utf8");
+        navigator.clipboard.writeText(utf8text.value);
+    });
 }
 window.addEventListener("load", main);
