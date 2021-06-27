@@ -181,5 +181,11 @@ function main() {
     });
     var plaintext_copy_button = document.getElementById("copy_plaintext");
     var plaintext_paste_button = document.getElementById("paste_plaintext");
+    plaintext_paste_button === null || plaintext_paste_button === void 0 ? void 0 : plaintext_paste_button.addEventListener("click", function () {
+        var utf8text = document.getElementById("plaintext_utf8");
+        navigator.clipboard.readText().then(function (clipboard_text) {
+            utf8text.value = clipboard_text;
+        });
+    });
 }
 window.addEventListener("load", main);

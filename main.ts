@@ -175,8 +175,15 @@ function main() {
         AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback)
     })
 
-    const plaintext_copy_button=document.getElementById("copy_plaintext")
-    const plaintext_paste_button=document.getElementById("paste_plaintext")
+    const plaintext_copy_button = document.getElementById("copy_plaintext")
+
+    const plaintext_paste_button = document.getElementById("paste_plaintext")
+    plaintext_paste_button?.addEventListener("click", () => {
+        let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
+        navigator.clipboard.readText().then((clipboard_text) => {
+            utf8text.value = clipboard_text
+        })
+    })
 }
 
 window.addEventListener("load", main)
