@@ -191,5 +191,23 @@ function main() {
         var utf8text = document.getElementById("plaintext_utf8");
         navigator.clipboard.writeText(utf8text.value);
     });
+    var key_copy_button = document.getElementById("copy_plaintext");
+    var key_paste_button = document.getElementById("copy_plaintext");
+    var cyphertext_copy_button = document.getElementById("copy_plaintext");
+    var cyphertext_paste_button = document.getElementById("copy_plaintext");
+    var txt_key = document.getElementById("key");
+    var txt_cypher = document.getElementById("encrypted");
+    key_copy_button === null || key_copy_button === void 0 ? void 0 : key_copy_button.addEventListener("click", function () {
+        navigator.clipboard.writeText(txt_key.value);
+    });
+    key_paste_button === null || key_paste_button === void 0 ? void 0 : key_paste_button.addEventListener("click", function () {
+        navigator.clipboard.readText().then(function (text_cb) { txt_key.value = text_cb; });
+    });
+    cyphertext_copy_button === null || cyphertext_copy_button === void 0 ? void 0 : cyphertext_copy_button.addEventListener("click", function () {
+        navigator.clipboard.writeText(txt_cypher.value);
+    });
+    cyphertext_paste_button === null || cyphertext_paste_button === void 0 ? void 0 : cyphertext_paste_button.addEventListener("click", function () {
+        navigator.clipboard.readText().then(function (text_cb) { txt_cypher.value = text_cb; });
+    });
 }
 window.addEventListener("load", main);

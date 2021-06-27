@@ -189,6 +189,29 @@ function main() {
         let utf8text = document.getElementById("plaintext_utf8") as HTMLInputElement
         navigator.clipboard.writeText(utf8text.value)
     })
+
+
+    const key_copy_button = document.getElementById("copy_plaintext")
+    const key_paste_button = document.getElementById("copy_plaintext")
+    const cyphertext_copy_button = document.getElementById("copy_plaintext")
+    const cyphertext_paste_button = document.getElementById("copy_plaintext")
+
+    const txt_key = document.getElementById("key") as HTMLInputElement
+    const txt_cypher = document.getElementById("encrypted") as HTMLInputElement
+
+    key_copy_button?.addEventListener("click", () => {
+        navigator.clipboard.writeText(txt_key.value)
+    })
+    key_paste_button?.addEventListener("click", () => {
+        navigator.clipboard.readText().then((text_cb) => { txt_key.value = text_cb })
+
+    })
+    cyphertext_copy_button?.addEventListener("click", () => {
+        navigator.clipboard.writeText(txt_cypher.value)
+    })
+    cyphertext_paste_button?.addEventListener("click", () => {
+        navigator.clipboard.readText().then((text_cb) => { txt_cypher.value = text_cb })
+    })
 }
 
 window.addEventListener("load", main)
