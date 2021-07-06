@@ -64,7 +64,7 @@ function AES_decrypt_callback(plaintext_hex) {
 }
 function AES_encrypt(hex_plaintext, hex_key, callback) {
     var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
-    var iv = toByteArray(AES_GenerateIV());
+    var iv = AES_GenerateIV();
     key_import.then(function (key) {
         var result = window.crypto.subtle.encrypt({
             name: "AES-CBC",
@@ -95,28 +95,6 @@ function AES_decrypt(hex_cyphertext, hex_key, callback) {
             callback(plaintext_hex);
         }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
     }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
-}
-function AES_GenerateKey() {
-    window.crypto.subtle.generateKey({
-        name: "AES-CBC",
-        length: 256
-    }, true, ["encrypt", "decrypt"]).then(function (key) {
-        crypto.subtle.exportKey("raw", key).then(function (result) {
-            var exportedKeyBuffer = new Uint8Array(result);
-            console.log(exportedKeyBuffer);
-            console.log(toHexString(exportedKeyBuffer));
-            var key_textbox = document.getElementById("key");
-            key_textbox.value = toHexString(exportedKeyBuffer);
-        });
-    });
-}
-function RSA_GenerateKey() {
-}
-function AES_GenerateIV() {
-    var random_IV = window.crypto.getRandomValues(new Uint8Array(16));
-    var ivtxtbox = document.getElementById("IV");
-    ivtxtbox.value = toHexString(random_IV);
-    return toHexString(random_IV);
 }
 function main() {
     var _this = this;

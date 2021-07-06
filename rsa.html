@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA encryption</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="root"></div>
+
+        <div>
+            <br>
+            <button id="encrypt_btn" type="button" class="btn btn-primary">Encrypt</button>
+            <button id="decrypt_btn" type="button" class="btn btn-primary">Decrypt</button>
+            <button id="keygen_btn" type="button" class="btn btn-primary">Generate new key</button>
+
+            <a id="reset_cache" type="button" class="btn btn-primary" href="index.html">Back to AES</a>
+        </div>
+    </div>
+
+    <script src="/bootstrap.js"></script>
+    <script src="CryptoTS.js"></script>
+    <script src="RSA/rsa.js"></script>
+</body>
+
+</html>

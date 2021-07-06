@@ -32,7 +32,7 @@ function AES_decrypt_callback(plaintext_hex: string) {
 function AES_encrypt(hex_plaintext: string, hex_key: string, callback: (hex_encrypted: string) => void) {
 
     let key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"])
-    let iv = toByteArray(AES_GenerateIV())
+    let iv = AES_GenerateIV()
     key_import.then((key) => {
         let result = window.crypto.subtle.encrypt(
             {
@@ -73,39 +73,6 @@ function AES_decrypt(hex_cyphertext: string, hex_key: string, callback: (hex_enc
         }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
     }).catch((error: Error) => { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); })
 
-}
-
-function AES_GenerateKey() {
-    window.crypto.subtle.generateKey(
-        {
-            name: "AES-CBC",
-            length: 256
-        },
-        true,
-        ["encrypt", "decrypt"]
-    ).then((key) => {
-        crypto.subtle.exportKey("raw", key).then((result) => {
-            const exportedKeyBuffer = new Uint8Array(result);
-            console.log(exportedKeyBuffer);
-            console.log(toHexString(exportedKeyBuffer))
-            let key_textbox = document.getElementById("key") as HTMLInputElement
-            key_textbox.value = toHexString(exportedKeyBuffer)
-        })
-
-    })
-
-}
-
-function RSA_GenerateKey() {
-
-}
-
-function AES_GenerateIV(): string {
-    let random_IV = window.crypto.getRandomValues(new Uint8Array(16))
-
-    let ivtxtbox = document.getElementById("IV") as HTMLInputElement
-    ivtxtbox.value = toHexString(random_IV)
-    return toHexString(random_IV)
 }
 
 
