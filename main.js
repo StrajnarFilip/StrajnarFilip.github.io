@@ -62,40 +62,6 @@ function AES_decrypt_callback(plaintext_hex) {
     var utf8text = document.getElementById("plaintext_utf8");
     utf8text.value = x.decode(toByteArray(plaintext_hex));
 }
-function AES_encrypt(hex_plaintext, hex_key, callback) {
-    var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
-    var iv = AES_GenerateIV();
-    key_import.then(function (key) {
-        var result = window.crypto.subtle.encrypt({
-            name: "AES-CBC",
-            iv: iv
-        }, key, toByteArray(hex_plaintext));
-        result.then(function (encrypted_array) {
-            var u8arr = new Uint8Array(encrypted_array);
-            var hex_array_withiv = toHexString(u8arr) + toHexString(iv);
-            callback(hex_array_withiv);
-        });
-    });
-}
-function AES_decrypt(hex_cyphertext, hex_key, callback) {
-    var key_import = crypto.subtle.importKey("raw", toByteArray(hex_key), "AES-CBC", true, ["encrypt", "decrypt"]);
-    var cyphertext_arr = toByteArray(hex_cyphertext);
-    var cyphertext = cyphertext_arr.slice(0, cyphertext_arr.length - 16);
-    var iv = cyphertext_arr.slice(-16);
-    console.log("IV: " + iv + ", Whole: " + cyphertext_arr + ", just ct: " + cyphertext + ", HEX CT: " + hex_cyphertext + ", HEX KEY: " + hex_key + " ");
-    key_import.then(function (key) {
-        var result = crypto.subtle.decrypt({
-            name: "AES-CBC",
-            iv: iv
-        }, key, cyphertext);
-        result.then(function (decrypted_array) {
-            var u8arr1 = new Uint8Array(decrypted_array);
-            console.log(u8arr1);
-            var plaintext_hex = toHexString(u8arr1);
-            callback(plaintext_hex);
-        }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
-    }).catch(function (error) { console.log(error); console.log(error.stack); console.log(error.message); console.log(error.name); });
-}
 function main() {
     var _this = this;
     var plaintex = document.getElementById("plaintext");
@@ -141,9 +107,15 @@ function main() {
             var x = new TextEncoder();
             plaintext_box.value = toHexString(x.encode(utf8text.value));
         }
-        AES_encrypt(plaintext_box.value, key_textbox.value, AES_encrypt_callback);
+        var enc_prom = AES_Encrypt(BytesToPromise(toByteArray(plaintext_box.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))));
+        enc_prom.then(function (x) { AES_encrypt_callback(toHexString(x)); });
     });
-    keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () { AES_GenerateKey(); });
+    keygen_btn === null || keygen_btn === void 0 ? void 0 : keygen_btn.addEventListener("click", function () {
+        AES_ExportKey(AES_GenerateKey()).then(function (key) {
+            var key_textbox = document.getElementById("key");
+            key_textbox.value = toHexString(key);
+        });
+    });
     decryptbtn === null || decryptbtn === void 0 ? void 0 : decryptbtn.addEventListener("click", function () {
         var key_textbox = document.getElementById("key");
         var cyphertext = document.getElementById("encrypted");
@@ -155,7 +127,8 @@ function main() {
             alert("Invalid cyphertext!");
             return;
         }
-        AES_decrypt(cyphertext.value, key_textbox.value, AES_decrypt_callback);
+        var dec_prom = AES_Decrypt(BytesToPromise(toByteArr(cyphertext.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))));
+        dec_prom.then(function (x) { AES_decrypt_callback(toHexString(x)); });
     });
     var plaintext_copy_button = document.getElementById("copy_plaintext");
     var plaintext_paste_button = document.getElementById("paste_plaintext");
