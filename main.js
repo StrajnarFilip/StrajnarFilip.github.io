@@ -127,7 +127,7 @@ function main() {
             alert("Invalid cyphertext!");
             return;
         }
-        var dec_prom = AES_Decrypt(BytesToPromise(toByteArr(cyphertext.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))));
+        var dec_prom = AES_Decrypt(BytesToPromise(toByteArray(cyphertext.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))));
         dec_prom.then(function (x) { AES_decrypt_callback(toHexString(x)); });
     });
     var plaintext_copy_button = document.getElementById("copy_plaintext");
