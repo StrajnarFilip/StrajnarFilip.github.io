@@ -97,7 +97,7 @@ function main() {
             alert("Invalid cyphertext!")
             return
         }
-        const dec_prom = AES_Decrypt(BytesToPromise(toByteArr(cyphertext.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))))
+        const dec_prom = AES_Decrypt(BytesToPromise(toByteArray(cyphertext.value)), AES_ImportKey(BytesToPromise(toByteArray(key_textbox.value))))
         dec_prom.then((x) => { AES_decrypt_callback(toHexString(x)) })
     })
 
