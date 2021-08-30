@@ -241,6 +241,25 @@ function AES_Decrypt(encrypted_data, key_promise) {
     });
     return data_promise;
 }
+function SHA512(data_promise) {
+    var promise = new Promise(function (resolve, reject) {
+        data_promise.then(function (data) {
+            var result = crypto.subtle.digest("SHA-512", data);
+            result.then(function (buffer) { resolve(new Uint8Array(buffer)); });
+        });
+    });
+    return promise;
+}
+function SHA512_times(data, iterations) {
+    var promise = new Promise(function (resolve, reject) {
+        var changing_promise = data;
+        for (var index = 0; index < iterations; index++) {
+            changing_promise = SHA512(changing_promise);
+        }
+        resolve(changing_promise);
+    });
+    return promise;
+}
 var AES_Safe = /** @class */ (function () {
     function AES_Safe() {
         this.key = AES_GenerateKey();

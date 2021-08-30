@@ -289,6 +289,27 @@ function AES_Decrypt(encrypted_data: Promise<Uint8Array>, key_promise: Promise<C
     return data_promise;
 }
 
+function SHA512(data_promise: Promise<Uint8Array>) {
+    const promise: Promise<Uint8Array> = new Promise<Uint8Array>((resolve, reject) => {
+        data_promise.then((data) => {
+            const result = crypto.subtle.digest("SHA-512", data);
+            result.then((buffer) => { resolve(new Uint8Array(buffer)) })
+        })
+    });
+    return promise;
+}
+
+function SHA512_times(data: Promise<Uint8Array>, iterations: number) {
+    const promise: Promise<Uint8Array> = new Promise<Uint8Array>((resolve, reject) => {
+        let changing_promise = data;
+        for (let index = 0; index < iterations; index++) {
+            changing_promise = SHA512(changing_promise);
+        }
+        resolve(changing_promise);
+    });
+    return promise;
+}
+
 class AES_Safe {
     public key: Promise<CryptoKey> = AES_GenerateKey()
     public cipher_data: Promise<Uint8Array> = BytesToPromise(new Uint8Array())

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA encryption</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="root">
+            <label>Raw text</label>
+            <div class="input-group">
+                <button class="btn btn-outline-secondary" type="button" id="paste_raw">Paste</button>
+                <input class="form-control" type="text" id="raw_text">
+            </div>
+            <label>Number of iterations</label>
+            <div class="input-group">
+                <input class="form-control" type="text" id="iterations" value="1000000">
+            </div>
+            <label>Hashed Hexadecimal</label>
+            <div class="input-group">
+                <button class="btn btn-outline-secondary" type="button" id="copy_hash">Copy</button>
+                <input class="form-control" type="password" id="hashed_hex">
+            </div>
+        </div>
+
+        <div>
+            <br>
+            <button id="hash_btn" type="button" class="btn btn-primary">Hash</button>
+            <a id="reset_cache" type="button" class="btn btn-primary" href="index.html">Back to AES</a>
+            <a type="button" class="btn btn-primary" href="rsa.html">To RSA</a>
+        </div>
+    </div>
+
+    <script src="/bootstrap.js"></script>
+    <script src="CryptoTS.js"></script>
+    <script src="SHA512/sha.js"></script>
+</body>
+
+</html>
