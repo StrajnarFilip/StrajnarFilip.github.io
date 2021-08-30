@@ -31,4 +31,4 @@ btn_hash?.addEventListener("click", () => {
 
 
 copy_hash.addEventListener("click", () => { navigator.clipboard.writeText(hashed_hex.value) })
-paste_raw.addEventListener("click", () => { navigator.clipboard.readText().then((cb_text) => { paste_raw.value = cb_text }) })
+paste_raw.addEventListener("click", () => { navigator.clipboard.readText().then((cb_text) => { raw_text.value = cb_text }) })
